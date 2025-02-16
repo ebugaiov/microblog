@@ -115,3 +115,11 @@ def unfollow(username):
         return redirect(url_for('main.user', username=username))
     else:
         return redirect(url_for('main.index'))
+    
+
+@bp.route('/user/<username>/popup')
+@login_required
+def user_popup(username):
+    user = db.first_or_404(sa.select(User).where(User.username == username))
+    form = EmptyForm()
+    return render_template('user_popup.html', user=user, form=form)
