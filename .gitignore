@@ -10,5 +10,8 @@ dist/
 wheels/
 *.egg-info
 
+#PyCharm
+.idea/
+
 # Virtual environments
-.venv
+.venv/

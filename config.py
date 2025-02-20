@@ -13,3 +13,4 @@ class Config:
     MAIL_SERVER = os.environ.get('MAIL_SERVER', 'localhost')
     MAIL_PORT = os.environ.get('MAIL_PORT', 8025)
     ADMINS = ['admin@example.com', ]
+    REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'

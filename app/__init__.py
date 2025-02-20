@@ -1,5 +1,7 @@
 import os
 import logging
+from redis import Redis
+import rq
 from logging.handlers import RotatingFileHandler
 from flask import Flask
 from config import Config
@@ -26,6 +28,9 @@ def create_app(config_class=Config):
     login.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
+
+    app.redis = Redis.from_url(app.config['REDIS_URL'])
+    app.task_queue = rq.Queue('microblog-tasks', connection=app.redis)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)

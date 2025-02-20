@@ -9,8 +9,14 @@ def send_async_email(app, msg):
         mail.send(msg)
 
 
-def send_email(subject, sender, recipients, text_body, text_html):
+def send_email(subject, sender, recipients, text_body, text_html, attachments=None, sync=False):
     msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body
     msg.html = text_html
-    Thread(target=send_async_email, args=(current_app._get_current_object(), msg)).start()
+    if attachments:
+        for attachment in attachments:
+            msg.attach(*attachment)
+    if sync:
+        mail.send(msg)
+    else:
+        Thread(target=send_async_email, args=(current_app._get_current_object(), msg)).start()
